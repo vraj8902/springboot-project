@@ -45,7 +45,8 @@ public class TrainAdminController {
     @PostMapping("/edit")
     public String editTrain(@ModelAttribute Train train) {
         int totalSeats = train.getNumberOfCoaches() * 60;
-        train.setAvailableSeats(totalSeats);
+        train.setTotalSeats(totalSeats);         // ✅ fix: also set totalSeats
+        train.setAvailableSeats(totalSeats);     
         trainService.updateTrain(train);
         return "redirect:/admin/trains";
     }

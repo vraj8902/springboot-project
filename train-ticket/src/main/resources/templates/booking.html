@@ -9,6 +9,7 @@
             background: #1a1a1a;
             color: #fff;
         }
+
         .coach-box {
             background: #2c2f35;
             border-radius: 1rem;
@@ -27,6 +28,9 @@
             border-radius: 0.5rem;
             box-shadow: 0 0 5px #bbf7d0;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            text-align: center;
+            width: 50px;
         }
 
         .seat:hover {
@@ -35,12 +39,9 @@
         }
 
         .walkway {
-            background-color: #c7d2fe;
+            width: 50px;
             height: 48px;
-            width: 60px;
-            border-radius: 0.5rem;
             display: inline-block;
-            margin: 0.3rem;
         }
 
         @keyframes fadeInUp {
@@ -56,6 +57,7 @@
     </style>
 </head>
 <body class="py-10 px-6">
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="max-w-5xl mx-auto">
     <h1 class="text-4xl font-bold text-center text-cyan-400 mb-6">Select Your Seats</h1>
@@ -74,26 +76,49 @@
 
     <form th:action="@{'/book/' + ${train.trainNo}}" method="post">
         <div th:each="coachNum : ${#numbers.sequence(1, train.numberOfCoaches)}" class="coach-box">
-            <h2 class="text-center text-xl font-bold text-cyan-300 mb-4" th:text="'Coach ' + ${coachNum} + ' 🚆'"></h2>
+            <h2 class="text-center text-xl font-bold text-cyan-300 mb-4"
+                th:text="'Coach ' + ${coachNum} + ' 🚆'"></h2>
 
-            <div class="flex flex-wrap justify-center">
-                <div th:each="seatNum : ${#numbers.sequence((coachNum-1)*60+1, coachNum*60)}"
-                     class="flex items-center">
-                    <div th:if="${seatNum % 4 == 0}" class="walkway"></div>
-                    <label th:classappend="${bookedSeats.contains('Seat ' + seatNum)} ? 'opacity-40 cursor-not-allowed' : ''">
-                        <input type="checkbox" name="selectedSeats"
-                               th:value="'Seat ' + ${seatNum}"
-                               th:disabled="${bookedSeats.contains('Seat ' + seatNum)}"
-                               class="hidden peer"/>
-                        <div class="seat peer-checked:bg-cyan-300 peer-checked:text-black"
-                             th:text="${seatNum}"></div>
-                    </label>
+            <div class="grid grid-cols-1 justify-center">
+                <!-- 10 rows of 6 seats (3 left + walkway + 3 right) -->
+                <div th:each="rowNum : ${#numbers.sequence(0, 9)}" class="flex justify-center mb-2">
+                    <!-- Left side 3 seats -->
+                    <div th:each="offset : ${#numbers.sequence(0,2)}" class="mx-1">
+                        <div th:with="seatNum=${(coachNum - 1) * 60 + rowNum * 6 + offset + 1}">
+                            <label th:classappend="${bookedSeats.contains('Seat ' + seatNum)} ? 'opacity-40 cursor-not-allowed' : ''">
+                                <input type="checkbox" name="selectedSeats"
+                                       th:value="'Seat ' + ${seatNum}"
+                                       th:disabled="${bookedSeats.contains('Seat ' + seatNum)}"
+                                       class="hidden peer"/>
+                                <div class="seat peer-checked:bg-cyan-300 peer-checked:text-black"
+                                     th:text="${seatNum}"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Walkway space -->
+                    <div class="walkway"></div>
+
+                    <!-- Right side 3 seats -->
+                    <div th:each="offset : ${#numbers.sequence(3,5)}" class="mx-1">
+                        <div th:with="seatNum=${(coachNum - 1) * 60 + rowNum * 6 + offset + 1}">
+                            <label th:classappend="${bookedSeats.contains('Seat ' + seatNum)} ? 'opacity-40 cursor-not-allowed' : ''">
+                                <input type="checkbox" name="selectedSeats"
+                                       th:value="'Seat ' + ${seatNum}"
+                                       th:disabled="${bookedSeats.contains('Seat ' + seatNum)}"
+                                       class="hidden peer"/>
+                                <div class="seat peer-checked:bg-cyan-300 peer-checked:text-black"
+                                     th:text="${seatNum}"></div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="text-center mt-6">
-            <button type="submit" class="bg-cyan-400 text-black font-semibold px-6 py-2 rounded shadow hover:bg-cyan-300 transition">
+            <button type="submit"
+                    class="bg-cyan-400 text-black font-semibold px-6 py-2 rounded shadow hover:bg-cyan-300 transition">
                 Confirm Selection
             </button>
         </div>

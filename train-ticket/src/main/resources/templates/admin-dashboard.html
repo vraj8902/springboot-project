@@ -7,52 +7,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .fade-in {
-            animation: fadeIn 0.7s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-animate {
+            position: relative;
+        }
+
+        .btn-animate::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            transition: top 0.3s;
+        }
+
+        .btn-animate:hover::after {
+            top: 0;
+        }
+
+        footer {
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body class="bg-gradient-to-tr from-sky-100 to-blue-200 min-h-screen">
-
 <!-- Navbar -->
-<nav class="bg-gray-900 text-white p-4 shadow-lg">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <div class="text-2xl font-bold">🚆 Admin Dashboard</div>
-        <div>
-            <a th:href="@{/logout}" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition">Logout</a>
-        </div>
-    </div>
-</nav>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-<!-- Dashboard Content -->
-<div class="max-w-6xl mx-auto mt-10 fade-in">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Card 1 -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition">
-            <h3 class="text-xl font-semibold mb-4 text-gray-800">Add New Train</h3>
-            <p class="text-sm text-gray-600 mb-6">Add train with details like fare, route and seats.</p>
+<!-- Dashboard -->
+<div class="max-w-6xl mx-auto mt-16 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Add Train -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 card-hover fade-in-up">
+            <h3 class="text-2xl font-bold mb-3 text-gray-800">🚄 Add New Train</h3>
+            <p class="text-sm text-gray-600 mb-6">Create a train with schedule, route, coaches, and fare.</p>
             <a th:href="@{/admin/train/add}"
-               class="inline-block bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition">Add Train</a>
+               class="inline-block bg-green-600 text-white px-5 py-2 rounded btn-animate hover:bg-green-700 transition">
+                Add Train
+            </a>
         </div>
 
-        <!-- Card 2 -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition">
-            <h3 class="text-xl font-semibold mb-4 text-gray-800">Manage Trains</h3>
-            <p class="text-sm text-gray-600 mb-6">Edit or delete existing train information.</p>
+        <!-- View Trains -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 card-hover fade-in-up" style="animation-delay: 0.2s;">
+            <h3 class="text-2xl font-bold mb-3 text-gray-800">📋 Manage Trains</h3>
+            <p class="text-sm text-gray-600 mb-6">Edit, delete, or view existing train records.</p>
             <a th:href="@{/admin/train/list}"
-               class="inline-block bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">View Trains</a>
+               class="inline-block bg-blue-600 text-white px-5 py-2 rounded btn-animate hover:bg-blue-700 transition">
+                View Trains
+            </a>
         </div>
     </div>
-
-    <!-- Optional: More cards -->
 </div>
 
 <!-- Footer -->
-<footer class="mt-20 text-center text-sm text-gray-500 pb-6">
+<footer class="mt-24 text-center text-sm text-gray-500 pb-8">
     © 2025 Train Reservation Admin. All rights reserved.
 </footer>
 

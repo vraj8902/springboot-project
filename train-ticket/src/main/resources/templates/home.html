@@ -11,13 +11,8 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen flex flex-col">
-    <!-- Navbar -->
-    <nav class="bg-blue-700 text-white p-4 flex justify-between items-center shadow-md">
-        <div class="text-2xl font-bold tracking-wide">🚆 Train Booking Portal</div>
-        <div>
-            <a th:href="@{/logout}" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition">Logout</a>
-        </div>
-    </nav>
+<div th:replace="fragments/navbar :: navbar"></div>
+
 
     <!-- Hero Section -->
     <header class="flex-grow flex flex-col justify-center items-center text-center px-6">
