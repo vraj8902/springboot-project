@@ -62,7 +62,7 @@ public class BookingController {
     }
 
     @GetMapping("/book/{trainNo}")
-    public String showBookingPage(@PathVariable String trainNo, Model model) {
+    public String showBookingPage(@PathVariable int trainNo, Model model) {
         Train train = trainRepository.findById(trainNo).orElse(null);
         if (train == null || train.getAvailableSeats() <= 0) {
             return "redirect:/home?error=NoSeats";
@@ -85,7 +85,7 @@ public class BookingController {
     }
 
     @PostMapping("/book/{trainNo}")
-    public String bookTrain(@PathVariable String trainNo,
+    public String bookTrain(@PathVariable int trainNo,
                             @RequestParam("selectedSeats") List<String> selectedSeats,
                             Authentication authentication,
                             Model model) {

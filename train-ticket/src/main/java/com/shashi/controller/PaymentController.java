@@ -14,13 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
-import java.io.IOException;
-import java.io.OutputStream;
+
 
 
 @Controller

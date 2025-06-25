@@ -1,92 +1,119 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Train Ticket</title>
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Space+Mono&amp;display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono&amp;display=swap");
+
 
         body {
             font-family: "Space Mono", monospace;
-            margin-top: 6rem;
+            margin-top: 6.5rem;
             text-align: center;
             background-color: #f3f4f6;
         }
 
         .main-container {
-            width: 400px;
-            margin: auto;
+            text-align: left;
+            width: 25%;
             padding: 20px;
-            border: 1px solid #000;
-            border-top: 2px dashed #000;
-            border-bottom: 2px dashed #000;
-            background-color: #fff;
+            display: inline-block;
+            margin: auto;
+            border: 1px solid black;
+            border-top: 1px dashed black;
+            border-bottom: 1px dashed black;
+            background-color: #f9fafb;
         }
 
-        .header {
+        .details-top {
+            line-height: 0;
             text-align: center;
-            line-height: 1.2;
-            margin-bottom: 1rem;
         }
 
-        .details {
+        .details-date {
+            text-align: left;
+        }
+
+        .info-one {
+            padding-right: 30px;
+        }
+
+        .info-two {
+            padding-left: 25px;
+        }
+
+        .ele-center {
+            text-align: center;
+        }
+
+        .details-main {
+            line-height: 0;
+            font-size: 1rem;
+        }
+
+        .bus-number {
+            font-weight: bolder;
+        }
+
+        .bus-labels {
             font-size: 14px;
-            margin-bottom: 1rem;
         }
 
-        .section {
-            margin-top: 10px;
-            margin-bottom: 10px;
+        h1 {
+            word-spacing: 10px;
+            font-size: 1rem;
         }
 
-        .seats {
-            font-weight: bold;
-            color: #222;
-            margin-top: 5px;
+        .fare-details {
+            word-spacing: 0;
         }
 
-        .ticket-title {
-            font-size: 1.5rem;
-            margin: 10px 0;
+        .cond-details {
+            padding-right: 70px;
         }
 
-        .footer {
+        .terms {
             font-size: 12px;
-            margin-top: 20px;
-            text-align: center;
         }
     </style>
 </head>
 <body>
+
 <div class="main-container">
-    <div class="header">
-        <h2>Train Booking System</h2>
-        <small>Central Railway</small>
+
+    <div class="details-top">
+        <small>P.M.P.L.</small>
+        <p th:text="'Train Name: ' + ${train.trainName}">Train name</p>
     </div>
 
-    <div class="details">
-        <p th:text="'Booking ID: ' + ${bookingId}"></p>
-        <p th:text="'Booking Time: ' + ${bookingTime}"></p>
-        <p th:text="'Train: ' + ${train.trainName} + ' (' + ${train.trainNo} + ')'"></p>
-        <p th:text="'Route: ' + ${train.source} + ' → ' + ${train.destination}"></p>
-        <p th:text="'Date: ' + ${train.travelDate}"></p>
-        <p th:text="'Departure: ' + ${train.departureTime} + ', Arrival: ' + ${train.arrivalTime}"></p>
+    <div class="details-date">
+        <small class="info-one" th:text="'Booking ID: ' + ${bookingId}">Booking ID</small>
+        <small class="info-one" th:text="${bookingTime}">Date</small>
+        <small class="info-two">[Time]</small>
     </div>
 
-    <div class="ticket-title">TRAIN TICKET</div>
+    <p class="ele-center" th:text="'Train No: ' + ${train.trainNo}">Train No.</p>
 
-    <div class="section">
-        <p th:text="'Seats Booked: ' + ${seatsBooked}"></p>
-        <p class="seats" th:text="'Seat Numbers: ' + ${booking.seatNumbers}"></p>
+    <div class="details-main">
+        <p class="bus-labels">BUS TIME: <span th:text="${bookingTime}">Time</span></p>
+        <p class="bus-labels">SEATS BOOKED: <span th:text="${seatsBooked}">2</span></p>
     </div>
 
-    <div class="section">
-        <p th:text="'Paid: ' + ${paid}"></p>
-        <p th:text="'Total Fare: ₹' + ${fare} + '/-'"></p>
+    <div class="fare">
+        <h1 th:text="'Fare Paid: ₹' + ${fare} + '/-'">Fare</h1>
+        <small class="fare-details" th:text="'Paid: ' + ${paid}">Yes</small>
+        <h1>Total Amount: <span th:text="'₹' + ${fare} + '/-'"></span></h1>
     </div>
 
-    <div class="footer">(NON-TRANSFERABLE)</div>
+    <div class="details-conductor">
+        <small class="cond-details">Generated</small>
+        <small class="cond-details" th:text="${user.username}">User</small>
+        <small class="cond-details-one">Online</small>
+    </div>
+
+    <p class="ele-center terms">(NON-TRANSFERABLE)</p>
 </div>
+
 </body>
 </html>

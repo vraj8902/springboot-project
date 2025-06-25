@@ -2,6 +2,7 @@ package com.shashi.controller;
 
 import com.shashi.entity.Train;
 import com.shashi.repository.TrainRepository;
+import com.shashi.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +15,9 @@ import java.util.List;
 public class TrainController {
 
     private final TrainRepository trainRepository;
+    private final BookingService bookingService;
 
-    // ✅ Show all trains
+    // Admin view all trains
     @GetMapping("/admin/trains")
     public String getAllTrains(Model model) {
         List<Train> trains = trainRepository.findAll();
@@ -23,44 +25,26 @@ public class TrainController {
         return "view-trains";
     }
 
-    // ✅ Show add train form
-    @GetMapping("/admin/train/add")
-    public String showAddTrainForm(Model model) {
-        model.addAttribute("train", new Train());
-        return "add-train";
+    // User view all trains
+    @GetMapping("/view-trains")
+    public String getAllTrainsForUser(Model model) {
+        List<Train> trains = trainRepository.findAll();
+        model.addAttribute("trains", trains);
+        return "view-trains";
     }
 
-    // ✅ Handle add train form submission
-    @PostMapping("/admin/train/add")
-    public String addTrain(@ModelAttribute Train train) {
-        train.setNumberOfCoaches(train.getNumberOfCoaches()); // Auto-sets total & available seats
-        trainRepository.save(train);
-        return "redirect:/admin/trains";
-    }
-
-    // ✅ Show edit train form
-    @GetMapping("/admin/train/edit/{trainNo}")
-    public String showEditTrainForm(@PathVariable String trainNo, Model model) {
-        Train train = trainRepository.findById(trainNo).orElse(null);
+    // ✅ Booking UI for a specific train
+    @GetMapping("train/book/{trainNo}")
+    public String showBookingPage(@PathVariable int trainNo, Model model) {
+    Train train = trainRepository.findById(trainNo).orElse(null);
         if (train == null) {
-            return "redirect:/admin/trains?error=NotFound";
+            return "redirect:/view-trains";
         }
+
+        List<String> bookedSeats = bookingService.getBookedSeats(trainNo);
+
         model.addAttribute("train", train);
-        return "edit-train";
-    }
-
-    // ✅ Handle edit train form submission
-    @PostMapping("/admin/train/edit")
-    public String updateTrain(@ModelAttribute Train train) {
-        train.setNumberOfCoaches(train.getNumberOfCoaches()); // Recalculate seats
-        trainRepository.save(train);
-        return "redirect:/admin/trains";
-    }
-
-    // ✅ Handle delete train
-    @GetMapping("/admin/train/delete/{trainNo}")
-    public String deleteTrain(@PathVariable String trainNo) {
-        trainRepository.deleteById(trainNo);
-        return "redirect:/admin/trains";
+        model.addAttribute("bookedSeats", bookedSeats);
+        return "booking"; // ➜ Renders booking.html
     }
 }

@@ -21,13 +21,13 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public Train getTrainByNumber(String trainNo) {
+    public Train getTrainByNumber(int trainNo) {
         return trainRepository.findById(trainNo).orElse(null);
     }
 
     @Override
     public void addTrain(Train train) {
-        // Initially, availableSeats == totalSeats
+        train.setTotalSeats(train.getNumberOfCoaches() * 60);
         train.setAvailableSeats(train.getTotalSeats());
         trainRepository.save(train);
     }
@@ -46,7 +46,6 @@ public class TrainServiceImpl implements TrainService {
             int oldAvailable = existing.getAvailableSeats();
             int newTotal = train.getTotalSeats();
 
-            // Adjust availableSeats proportionally
             int newAvailable = oldAvailable + (newTotal - oldTotal);
             existing.setTotalSeats(newTotal);
             existing.setAvailableSeats(Math.max(newAvailable, 0));
@@ -56,7 +55,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void deleteTrain(String trainNo) {
+    public void deleteTrain(int trainNo) {
         trainRepository.deleteById(trainNo);
     }
 }

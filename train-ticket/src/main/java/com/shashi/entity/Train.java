@@ -1,6 +1,7 @@
 package com.shashi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
@@ -11,7 +12,7 @@ import lombok.*;
 public class Train {
 
     @Id
-    private String trainNo;
+    private int trainNo;
 
     private String trainName;
 
@@ -19,28 +20,11 @@ public class Train {
 
     private String destination;
 
+    private int numberOfCoaches;  // ✅ required field
+
+    private int totalSeats;       // ✅ computed field: numberOfCoaches * 60
+
     private double fare;
 
-    private int totalSeats;
-
     private int availableSeats;
-
-    private String departureTime;
-
-    private String arrivalTime;
-
-    private String travelDate;
-
-    private int numberOfCoaches; // ✅ New field
-
-    public int getNumberOfCoaches() {
-    return numberOfCoaches;
-}
-
-public void setNumberOfCoaches(int numberOfCoaches) {
-    System.out.println("Setting numberOfCoaches: " + numberOfCoaches);
-    this.numberOfCoaches = numberOfCoaches;
-    this.totalSeats = numberOfCoaches * 60;
-    this.availableSeats = this.totalSeats;
-}
 }

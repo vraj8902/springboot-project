@@ -17,47 +17,51 @@ public class TrainAdminController {
 
     private final TrainService trainService;
 
+    // Show add train form
     @GetMapping("/add")
     public String showAddTrainForm(Model model) {
         model.addAttribute("train", new Train());
         return "add-train";
     }
 
+    // Handle add train form submission
     @PostMapping("/add")
     public String addTrain(@ModelAttribute Train train) {
-        // Each coach has 60 seats; compute total available seats
         int totalSeats = train.getNumberOfCoaches() * 60;
         train.setAvailableSeats(totalSeats);
         trainService.addTrain(train);
-        return "redirect:/admin/train/list";
+        return "redirect:/admin/trains";
     }
 
-    @GetMapping("/list")
-    public String listTrains(Model model) {
-        List<Train> trains = trainService.getAllTrains();
-        model.addAttribute("trains", trains);
-        return "view-trains";
-    }
-
+    // Show edit train form
     @GetMapping("/edit/{trainNo}")
-    public String showEditForm(@PathVariable String trainNo, Model model) {
+    public String showEditForm(@PathVariable int trainNo, Model model) {
         Train train = trainService.getTrainByNumber(trainNo);
         model.addAttribute("train", train);
         return "edit-train";
     }
 
+    // Handle edit train form submission
     @PostMapping("/edit")
     public String editTrain(@ModelAttribute Train train) {
-        // Recalculate available seats based on coach count
         int totalSeats = train.getNumberOfCoaches() * 60;
         train.setAvailableSeats(totalSeats);
         trainService.updateTrain(train);
-        return "redirect:/admin/train/list";
+        return "redirect:/admin/trains";
     }
 
+    // Handle delete train
     @GetMapping("/delete/{trainNo}")
-    public String deleteTrain(@PathVariable String trainNo) {
+    public String deleteTrain(@PathVariable int trainNo) {
         trainService.deleteTrain(trainNo);
-        return "redirect:/admin/train/list";
+        return "redirect:/admin/trains";
+    }
+
+    // List trains for admin (optional, if you want admin to see the list)
+    @GetMapping("/list")
+    public String listTrains(Model model) {
+        List<Train> trains = trainService.getAllTrains();
+        model.addAttribute("trains", trains);
+        return "view-trains";
     }
 }
