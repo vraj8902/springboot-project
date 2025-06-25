@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Train Ticket</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Space+Mono&amp;display=swap");
+
+        body {
+            font-family: "Space Mono", monospace;
+            margin-top: 6rem;
+            text-align: center;
+            background-color: #f3f4f6;
+        }
+
+        .main-container {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #000;
+            border-top: 2px dashed #000;
+            border-bottom: 2px dashed #000;
+            background-color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .details {
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .seats {
+            font-weight: bold;
+            color: #222;
+            margin-top: 5px;
+        }
+
+        .ticket-title {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .footer {
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <div class="header">
+        <h2>Train Booking System</h2>
+        <small>Central Railway</small>
+    </div>
+
+    <div class="details">
+        <p th:text="'Booking ID: ' + ${bookingId}"></p>
+        <p th:text="'Booking Time: ' + ${bookingTime}"></p>
+        <p th:text="'Train: ' + ${train.trainName} + ' (' + ${train.trainNo} + ')'"></p>
+        <p th:text="'Route: ' + ${train.source} + ' → ' + ${train.destination}"></p>
+        <p th:text="'Date: ' + ${train.travelDate}"></p>
+        <p th:text="'Departure: ' + ${train.departureTime} + ', Arrival: ' + ${train.arrivalTime}"></p>
+    </div>
+
+    <div class="ticket-title">TRAIN TICKET</div>
+
+    <div class="section">
+        <p th:text="'Seats Booked: ' + ${seatsBooked}"></p>
+        <p class="seats" th:text="'Seat Numbers: ' + ${booking.seatNumbers}"></p>
+    </div>
+
+    <div class="section">
+        <p th:text="'Paid: ' + ${paid}"></p>
+        <p th:text="'Total Fare: ₹' + ${fare} + '/-'"></p>
+    </div>
+
+    <div class="footer">(NON-TRANSFERABLE)</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Train</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div class="max-w-xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+    <h1 class="text-2xl font-bold mb-6 text-center text-indigo-600">Add New Train</h1>
+    <form th:action="@{/admin/train/add}" method="post">
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Train Number</label>
+            <input type="text" name="trainNo" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Train Name</label>
+            <input type="text" name="trainName" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="flex gap-4 mb-4">
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Source</label>
+                <input type="text" name="source" required
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Destination</label>
+                <input type="text" name="destination" required
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+        </div>
+
+        <div class="flex gap-4 mb-4">
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Departure Time</label>
+                <input type="text" name="departureTime" required placeholder="HH:MM"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Arrival Time</label>
+                <input type="text" name="arrivalTime" required placeholder="HH:MM"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Travel Date</label>
+            <input type="date" name="travelDate" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Fare (Rs.)</label>
+            <input type="number" name="fare" step="0.01" min="0" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 font-bold mb-2">Number of Coaches</label>
+            <input type="number" name="numberOfCoaches" min="1" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="text-center">
+            <button type="submit"
+                    class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+                Add Train
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

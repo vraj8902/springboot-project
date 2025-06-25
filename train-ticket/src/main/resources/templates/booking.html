@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Book Your Seat</title>
+    <link rel="stylesheet" href="/css/booking.css">
+    <script>
+        function validateAndSubmit() {
+            const checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+            if (checkboxes.length === 0 || checkboxes.length > 4) {
+                alert("Please select between 1 to 4 seats.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<h2 th:text="'Booking for Train: ' + ${train.trainName}"></h2>
+
+<form th:action="@{'/book/' + ${train.trainNo}}" method="post" onsubmit="return validateAndSubmit()">
+    <div class="stadium">
+        <div class="stage"><h1>Train</h1></div>
+        <div class="exit exit--front fuselage"></div>
+
+        <div th:each="coach : ${#numbers.sequence(1, numberOfCoaches)}">
+            <h3 th:text="'Coach ' + ${coach}"></h3>
+            <ol class="sbody">
+                <li th:each="row : ${#numbers.sequence(1, 10)}" th:class="'row row--' + ${row}">
+                    <ol class="seats" type="A">
+                        <li th:each="col : ${#arrays.asList('A','B','C','D','E','F')}" class="seat">
+                            <input type="checkbox"
+                                   th:id="${coach + '-' + row + col}"
+                                   th:name="selectedSeats"
+                                   th:value="${coach + '-' + row + col}"
+                                   th:disabled="${bookedSeats.contains(coach + '-' + row + col)}"/>
+                            <label th:for="${coach + '-' + row + col}" th:text="${row + col}"></label>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+
+        <div class="exit exit--back fuselage"></div>
+    </div>
+    <br/>
+    <button type="submit">Proceed to Payment</button>
+</form>
+</body>
+</html>

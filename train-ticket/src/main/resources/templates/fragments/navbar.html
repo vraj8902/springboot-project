@@ -1,0 +1,11 @@
+<!-- File: src/main/resources/templates/fragments/navbar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="navbar">
+     <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+           <a href="/train/add">Add Train</a>
+</li>
+    </div>
+  </body>
+</html>

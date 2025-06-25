@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Train</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div class="max-w-xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+    <h1 class="text-2xl font-bold mb-6 text-center text-blue-700">Edit Train</h1>
+    <form th:action="@{/admin/train/edit}" method="post" th:object="${train}">
+        <input type="hidden" th:field="*{trainNo}" />
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Train Name</label>
+            <input type="text" th:field="*{trainName}" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="flex gap-4 mb-4">
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Source</label>
+                <input type="text" th:field="*{source}" required
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Destination</label>
+                <input type="text" th:field="*{destination}" required
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+        </div>
+
+        <div class="flex gap-4 mb-4">
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Departure Time</label>
+                <input type="text" th:field="*{departureTime}" required placeholder="HH:MM"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+            <div class="w-1/2">
+                <label class="block text-gray-700 font-bold mb-2">Arrival Time</label>
+                <input type="text" th:field="*{arrivalTime}" required placeholder="HH:MM"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Travel Date</label>
+            <input type="date" th:field="*{travelDate}" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Fare (Rs.)</label>
+            <input type="number" th:field="*{fare}" step="0.01" min="0" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 font-bold mb-2">Number of Coaches</label>
+            <input type="number" th:field="*{numberOfCoaches}" min="1" required
+                   class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="text-center">
+            <button type="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                Update Train
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
